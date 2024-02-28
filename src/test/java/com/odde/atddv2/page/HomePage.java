@@ -1,5 +1,6 @@
-package com.odde.atddv2;
+package com.odde.atddv2.page;
 
+import com.odde.atddv2.TestSteps;
 import lombok.SneakyThrows;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -15,17 +16,17 @@ import static org.openqa.selenium.By.xpath;
 public class HomePage {
     private WebDriver webDriver = null;
 
-    void open() {
+    public void open() {
         getWebDriver().get("http://host.docker.internal:10081");
     }
 
-    void login(String userName, String password, TestSteps testSteps) {
+    public void login(String userName, String password, TestSteps testSteps) {
         await().ignoreExceptions().until(() -> getWebDriver().findElement(xpath("//*[@placeholder='用户名']")), Objects::nonNull).sendKeys(userName);
         await().ignoreExceptions().until(() -> getWebDriver().findElement(xpath("//*[@placeholder='密码']")), Objects::nonNull).sendKeys(password);
         await().ignoreExceptions().until(() -> getWebDriver().findElement(xpath("//*[@id=\"app\"]/div/form/button/span")), Objects::nonNull).click();
     }
 
-    void shouldContainText(String text, TestSteps testSteps) {
+    public void shouldContainText(String text, TestSteps testSteps) {
         await().ignoreExceptions().untilAsserted(() -> assertThat(getWebDriver().findElements(xpath("//*[text()='" + text + "']"))).isNotEmpty());
     }
 
