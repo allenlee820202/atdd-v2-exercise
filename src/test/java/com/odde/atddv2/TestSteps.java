@@ -16,7 +16,6 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.net.URL;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -90,13 +89,7 @@ public class TestSteps {
     @当("以用户名为{string}和密码为{string}登录时")
     public void 以用户名为和密码为登录时(String userName, String password) {
         homePage.open();
-        login(userName, password);
-    }
-
-    private void login(String userName, String password) {
-        await().ignoreExceptions().until(() -> getWebDriver().findElement(xpath("//*[@placeholder='用户名']")), Objects::nonNull).sendKeys(userName);
-        await().ignoreExceptions().until(() -> getWebDriver().findElement(xpath("//*[@placeholder='密码']")), Objects::nonNull).sendKeys(password);
-        await().ignoreExceptions().until(() -> getWebDriver().findElement(xpath("//*[@id=\"app\"]/div/form/button/span")), Objects::nonNull).click();
+        homePage.login(userName, password, this);
     }
 
     @那么("{string}登录成功")
