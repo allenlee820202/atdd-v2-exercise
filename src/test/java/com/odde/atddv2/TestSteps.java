@@ -23,7 +23,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.By.xpath;
 
 public class TestSteps {
-    private final HomePage homePage = new HomePage();
+    @Autowired
+    private HomePage homePage;
 
     private WebDriver webDriver = null;
 
