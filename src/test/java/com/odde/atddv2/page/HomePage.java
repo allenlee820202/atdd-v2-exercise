@@ -1,6 +1,5 @@
 package com.odde.atddv2.page;
 
-import com.odde.atddv2.TestSteps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +10,7 @@ public class HomePage {
     private Browser browser;
 
     public void open() {
-        browser.getWebDriver().get("http://host.docker.internal:10081");
+        browser.launch();
     }
 
     public void login(String userName, String password) {

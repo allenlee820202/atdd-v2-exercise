@@ -1,6 +1,5 @@
 package com.odde.atddv2.page;
 
-import com.odde.atddv2.TestSteps;
 import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
 import org.awaitility.Awaitility;
@@ -48,5 +47,9 @@ public class Browser {
         if (webDriver == null)
             webDriver = createWebDriver();
         return webDriver;
+    }
+
+    public void launch() {
+        getWebDriver().get("http://host.docker.internal:10081");
     }
 }
