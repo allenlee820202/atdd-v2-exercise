@@ -19,6 +19,8 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.openqa.selenium.By.xpath;
 
 public class TestSteps {
@@ -87,5 +89,26 @@ public class TestSteps {
         if (webDriver == null)
             webDriver = createWebDriver();
         return webDriver;
+    }
+
+    @当("以用户名为{string}和密码为{string}登录时")
+    public void 以用户名为和密码为登录时(String username, String password) {
+        getWebDriver().get("http://host.docker.internal:10081/");
+        getWebDriver().findElement(By.xpath("//*[@id=\"app\"]/div/form/div[2]/div/div/input")).sendKeys(username);
+        getWebDriver().findElement(By.xpath("//*[@id=\"app\"]/div/form/div[3]/div/div/input")).sendKeys(password);
+        getWebDriver().findElement(By.xpath("//*[@id=\"app\"]/div/form/button")).click();
+    }
+
+    @SneakyThrows
+    @那么("{string}登录成功")
+    public void 登录成功(String username) {
+        // await() is better than Thread.sleep()
+        await().ignoreExceptions().untilAsserted(() -> {
+                    var element = getWebDriver().findElement(By.xpath("//*[text()='Welcome " + username + "']"));
+                    assertNotNull(element);
+                }
+        );
+        // 為了觀察UI效果，暫停2秒，一般測試不該sleep
+        TimeUnit.SECONDS.sleep(2);
     }
 }
