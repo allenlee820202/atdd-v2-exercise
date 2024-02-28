@@ -28,7 +28,7 @@ public class Browser {
         Awaitility.await().ignoreExceptions().until(() -> getWebDriver().findElement(By.xpath("//*[@placeholder='" + placeholder + "']")), Objects::nonNull).sendKeys(text);
     }
 
-    public void shouldContainText(String text, TestSteps testSteps) {
+    public void shouldContainText(String text) {
         Awaitility.await().ignoreExceptions().untilAsserted(() -> Assertions.assertThat(getWebDriver().findElements(By.xpath("//*[text()='" + text + "']"))).isNotEmpty());
     }
 

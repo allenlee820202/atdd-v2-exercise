@@ -2,6 +2,7 @@ package com.odde.atddv2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.odde.atddv2.entity.User;
+import com.odde.atddv2.page.Browser;
 import com.odde.atddv2.page.HomePage;
 import com.odde.atddv2.repo.UserRepo;
 import io.cucumber.java.After;
@@ -30,6 +31,10 @@ public class TestSteps {
 
     @Autowired
     UserRepo userRepo;
+
+    @Autowired
+    Browser browser;
+
     private Response response;
 
     @当("测试环境")
@@ -83,12 +88,12 @@ public class TestSteps {
 
     @那么("{string}登录成功")
     public void 登录成功(String userName) {
-        homePage.shouldContainText(("Welcome " + userName), this);
+        browser.shouldContainText("Welcome " + userName);
     }
 
     @那么("登录失败的错误信息是{string}")
     public void 登录失败的错误信息是(String message) {
-        homePage.shouldContainText(message, this);
+        browser.shouldContainText(message);
     }
 
     @SneakyThrows
@@ -102,7 +107,7 @@ public class TestSteps {
             webDriver.quit();
             webDriver = null;
         }
-        homePage.quitWebDriver();
+        browser.quitWebDriver();
     }
 
     public WebDriver getWebDriver() {

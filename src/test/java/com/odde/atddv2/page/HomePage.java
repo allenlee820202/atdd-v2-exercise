@@ -19,12 +19,4 @@ public class HomePage {
         browser.inputByPlaceholder("密码", password);
         browser.clickByText("登录");
     }
-
-    public void shouldContainText(String text, TestSteps testSteps) {
-        browser.shouldContainText(text, testSteps);
-    }
-
-    public void quitWebDriver() {
-        browser.quitWebDriver();
-    }
 }
