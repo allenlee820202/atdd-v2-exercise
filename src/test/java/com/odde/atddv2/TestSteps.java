@@ -88,8 +88,8 @@ public class TestSteps {
     @当("以用户名为{string}和密码为{string}登录时")
     public void 以用户名为和密码为登录时(String userName, String password) {
         getWebDriver().get("http://host.docker.internal:10081");
-        await().ignoreExceptions().until(() -> getWebDriver().findElement(xpath("//*[@id=\"app\"]/div/form/div[2]/div/div/input")), Objects::nonNull).sendKeys(userName);
-        await().ignoreExceptions().until(() -> getWebDriver().findElement(xpath("//*[@id=\"app\"]/div/form/div[3]/div/div/input")), Objects::nonNull).sendKeys(password);
+        await().ignoreExceptions().until(() -> getWebDriver().findElement(xpath("//*[@placeholder='用户名']")), Objects::nonNull).sendKeys(userName);
+        await().ignoreExceptions().until(() -> getWebDriver().findElement(xpath("//*[@placeholder='密码']")), Objects::nonNull).sendKeys(password);
         await().ignoreExceptions().until(() -> getWebDriver().findElement(xpath("//*[@id=\"app\"]/div/form/button/span")), Objects::nonNull).click();
     }
 
