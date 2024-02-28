@@ -111,4 +111,16 @@ public class TestSteps {
         // 為了觀察UI效果，暫停2秒，一般測試不該sleep
         TimeUnit.SECONDS.sleep(2);
     }
+
+    @SneakyThrows
+    @那么("登录失败的错误信息是{string}")
+    public void 登录失败的错误信息是(String errorMessage) {
+        await().ignoreExceptions().untilAsserted(() -> {
+                    var element = getWebDriver().findElement(By.xpath("//*[text()='" + errorMessage + "']"));
+                    assertNotNull(element);
+                }
+        );
+        // 為了觀察UI效果，暫停2秒，一般測試不該sleep
+        TimeUnit.SECONDS.sleep(2);
+    }
 }
