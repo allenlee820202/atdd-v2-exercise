@@ -94,16 +94,12 @@ public class TestSteps {
 
     @那么("{string}登录成功")
     public void 登录成功(String userName) {
-        shouldContainText(("Welcome " + userName));
-    }
-
-    private void shouldContainText(String text) {
-        await().ignoreExceptions().untilAsserted(() -> assertThat(getWebDriver().findElements(xpath("//*[text()='" + text + "']"))).isNotEmpty());
+        homePage.shouldContainText(("Welcome " + userName), this);
     }
 
     @那么("登录失败的错误信息是{string}")
     public void 登录失败的错误信息是(String message) {
-        shouldContainText(message);
+        homePage.shouldContainText(message, this);
     }
 
     public WebDriver getWebDriver() {
