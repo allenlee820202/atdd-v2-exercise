@@ -77,7 +77,7 @@ public class TestSteps {
     @当("以用户名为{string}和密码为{string}登录时")
     public void 以用户名为和密码为登录时(String userName, String password) {
         homePage.open();
-        homePage.login(userName, password, this);
+        homePage.login(userName, password);
     }
 
     @那么("{string}登录成功")
