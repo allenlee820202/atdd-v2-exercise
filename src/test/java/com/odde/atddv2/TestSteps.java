@@ -25,28 +25,16 @@ import static org.openqa.selenium.By.xpath;
 public class TestSteps {
     private final HomePage homePage = new HomePage(this);
 
+    private WebDriver webDriver = null;
+
     @Autowired
     UserRepo userRepo;
-    private WebDriver webDriver = null;
     private Response response;
-
-    @SneakyThrows
-    public WebDriver createWebDriver() {
-        return new RemoteWebDriver(new URL("http://web-driver.tool.net:4444"), DesiredCapabilities.chrome());
-    }
 
     @当("测试环境")
     public void 测试环境() {
         getWebDriver().get("http://host.docker.internal:10081/");
         assertThat(getWebDriver().findElements(xpath("//*[text()='登录']"))).isNotEmpty();
-    }
-
-    @After
-    public void quitWebDriver() {
-        if (webDriver != null) {
-            webDriver.quit();
-            webDriver = null;
-        }
     }
 
     @那么("打印Token")
@@ -100,6 +88,20 @@ public class TestSteps {
     @那么("登录失败的错误信息是{string}")
     public void 登录失败的错误信息是(String message) {
         homePage.shouldContainText(message, this);
+    }
+
+    @SneakyThrows
+    public WebDriver createWebDriver() {
+        return new RemoteWebDriver(new URL("http://web-driver.tool.net:4444"), DesiredCapabilities.chrome());
+    }
+
+    @After
+    public void quitWebDriver() {
+        if (webDriver != null) {
+            webDriver.quit();
+            webDriver = null;
+        }
+        homePage.quitWebDriver();
     }
 
     public WebDriver getWebDriver() {
