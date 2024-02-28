@@ -1,4 +1,4 @@
-package com.odde.atddv2.page;
+package com.odde.atddv2;
 
 import lombok.SneakyThrows;
 import org.assertj.core.api.Assertions;
@@ -19,11 +19,11 @@ public class Browser {
     public Browser() {
     }
 
-    void clickByText(String text) {
+    public void clickByText(String text) {
         Awaitility.await().ignoreExceptions().until(() -> getWebDriver().findElement(By.xpath("//*[text()='" + text + "']")), Objects::nonNull).click();
     }
 
-    void inputByPlaceholder(String placeholder, String text) {
+    public void inputByPlaceholder(String placeholder, String text) {
         Awaitility.await().ignoreExceptions().until(() -> getWebDriver().findElement(By.xpath("//*[@placeholder='" + placeholder + "']")), Objects::nonNull).sendKeys(text);
     }
 

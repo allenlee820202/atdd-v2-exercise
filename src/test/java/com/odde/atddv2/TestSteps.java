@@ -2,7 +2,6 @@ package com.odde.atddv2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.odde.atddv2.entity.User;
-import com.odde.atddv2.page.Browser;
 import com.odde.atddv2.page.HomePage;
 import com.odde.atddv2.repo.UserRepo;
 import io.cucumber.java.After;
