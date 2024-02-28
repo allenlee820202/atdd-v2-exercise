@@ -13,13 +13,7 @@ import static org.awaitility.Awaitility.await;
 import static org.openqa.selenium.By.xpath;
 
 public class HomePage {
-    private final TestSteps testSteps;
-
     private WebDriver webDriver = null;
-
-    public HomePage(TestSteps testSteps) {
-        this.testSteps = testSteps;
-    }
 
     void open() {
         getWebDriver().get("http://host.docker.internal:10081");

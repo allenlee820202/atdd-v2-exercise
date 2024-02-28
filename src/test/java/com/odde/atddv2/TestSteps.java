@@ -19,11 +19,10 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.awaitility.Awaitility.await;
 import static org.openqa.selenium.By.xpath;
 
 public class TestSteps {
-    private final HomePage homePage = new HomePage(this);
+    private final HomePage homePage = new HomePage();
 
     private WebDriver webDriver = null;
 
