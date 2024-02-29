@@ -1,14 +1,19 @@
 package com.odde.atddv2;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.odde.atddv2.entity.Order;
+import com.odde.atddv2.entity.User;
 import com.odde.atddv2.page.OrderPage;
 import com.odde.atddv2.page.WelcomePage;
 import com.odde.atddv2.repo.OrderRepo;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.Before;
 import io.cucumber.java.zh_cn.假如;
 import io.cucumber.java.zh_cn.当;
 import io.cucumber.java.zh_cn.那么;
 import lombok.SneakyThrows;
+import okhttp3.*;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
@@ -26,6 +31,21 @@ public class OrderSteps {
 
     @Autowired
     private OrderRepo orderRepo;
+
+    private String token;
+
+    private Response orderListResponse;
+
+    @SneakyThrows
+    @Before(order = 999999)
+    public void login() {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        ObjectMapper objectMapper = new ObjectMapper();
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), objectMapper.writeValueAsString(new User().setUserName("j").setPassword("j")));
+        Request request = new Request.Builder().url("http://localhost:10081/users/login").post(requestBody).build();
+        token = okHttpClient.newCall(request).execute().header("Token");
+        System.out.println(token);
+    }
 
     @SneakyThrows
     @那么("显示如下订单")
@@ -49,5 +69,20 @@ public class OrderSteps {
                 .setRecipientName((String) map.get("recipientName"))
                 .setStatus(Order.OrderStatus.valueOf((String) map.get("status")));
         orderRepo.save(order);
+    }
+
+    @SneakyThrows
+    @当("API查询订单时")
+    public void api查询订单时() {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder().url("http://localhost:10081/api/orders").header("Token", token).get().build();
+        orderListResponse = okHttpClient.newCall(request).execute();
+        System.out.print(orderListResponse);
+    }
+
+    @SneakyThrows
+    @那么("返回如下订单")
+    public void 返回如下订单(String json) {
+        JSONAssert.assertEquals(json, orderListResponse.body().string(), true);
     }
 }
